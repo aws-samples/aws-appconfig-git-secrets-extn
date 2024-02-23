@@ -27,7 +27,7 @@ subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/run/sc
 
 
 def lambda_handler(event, context):
-    logger.info(json.dumps(event))
+    logger.debug(json.dumps(event))
     if (event_type := event.get("Type")) != "PreStartDeployment":
         logger.critical("Wrong event type %s for this function, ignoring", event_type)
         return
