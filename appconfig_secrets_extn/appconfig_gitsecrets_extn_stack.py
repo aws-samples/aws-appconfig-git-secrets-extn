@@ -3,7 +3,7 @@
 
 from typing import cast
 from aws_cdk import (
-    aws_appconfig_alpha as appconfig,
+    aws_appconfig,
     aws_lambda,
     aws_iam as iam,
     Stack,
@@ -37,14 +37,14 @@ class AppconfigGitSecretsExtnStack(Stack):
         )
         function.grant_invoke(appconfig_svc_role)
 
-        appconfig.Extension(
+        aws_appconfig.Extension(
             self,
             "gitsecrets_exten",
             actions=[
-                appconfig.Action(
-                    action_points=[appconfig.ActionPoint.PRE_START_DEPLOYMENT],
+                aws_appconfig.Action(
+                    action_points=[aws_appconfig.ActionPoint.PRE_START_DEPLOYMENT],
                     description="Check configuration data for secrets",
-                    event_destination=appconfig.LambdaDestination(
+                    event_destination=aws_appconfig.LambdaDestination(
                         cast(aws_lambda.IFunction, function)
                     ),
                 ),
